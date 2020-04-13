@@ -84,16 +84,17 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 			if (hack->settings.snaplines) {
 				DrawLine(entPos2D.x, entPos2D.y, windowWidth / 2, windowHeight, 2, snaplineColor); //snapLine
 			}
-
+			
 			if (hack->World2Screen(entHead3D, entHead2D)) {
+				//2D Boxes
 				if (hack->settings.box2d) {
 					DrawEspBox2D(entPos2D, entHead2D, 2, espColor);
 				}
-
+				//3D Boxes
 				if (hack->settings.box3D) {
 					DrawEspBox3D(entHead3D, curEnt->vecOrigin, curEnt->angEyeAnglesY, 37, 3, espColor);
 				}
-
+				//2D status
 				if (hack->settings.status2D) {
 					int height = ABS(entPos2D.y - entHead2D.y);
 					int dX = (entPos2D.x - entHead2D.x);
@@ -119,7 +120,7 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 					DrawLine(botHealth, topHealth, 2, hack->color.health);
 					DrawLine(botArmor, topArmor, 2, hack->color.armor);
 				}
-
+				//Headline ESP
 				if (hack->settings.headlineESP) {
 					vec3 head3D = hack->GetBonePos(curEnt, 8);
 					vec3 entAngles;

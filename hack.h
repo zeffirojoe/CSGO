@@ -1,5 +1,8 @@
 #pragma once
 #include "csgo.h"
+#include <d3d9.h>
+#include <d3dx9.h>
+
 #define STR_MERGE_IMPL(a, b) a##b
 #define STR_MERGE(a, b) STR_MERGE_IMPL(a,b)
 #define MAKE_PAD(size) STR_MERGE(_pad, __COUNTER__) [size]
@@ -10,6 +13,14 @@
 #define TORAD(x) ((x) * 0.01745329252)
 
 #define W2S(x,y) hack->World2Screen(x, y)
+
+namespace argb {
+	const D3DCOLOR white = D3DCOLOR_ARGB(255, 255, 255, 255);
+	const D3DCOLOR red = D3DCOLOR_ARGB(255, 255, 0, 0);
+	const D3DCOLOR green = D3DCOLOR_ARGB(255, 0, 255, 0);
+	const D3DCOLOR blue = D3DCOLOR_ARGB(255, 0, 0, 255);
+	const D3DCOLOR purple = D3DCOLOR_ARGB(255, 255, 0, 255);
+}
 
 class Vector3
 {
@@ -107,6 +118,9 @@ public:
 
 	void Init();
 	void Update();
+
+	void CheckButtons();
+
 	bool checkValidEnt(Ent* ent);
 	bool World2Screen(Vec3 pos, vec2& screen);
 	vec3 GetBonePos(Ent* ent, int bone);
@@ -114,14 +128,47 @@ public:
 
 
 	struct settings {
+		bool showMenu = false;
 		bool showTeammates = true;
-		bool snaplines = true;
-		bool box2d = true;
-		bool status2D = true;
-		bool statusText = true;
-		bool box3D = true;
-		bool velEsp = true;
-		bool headlineESP = true;
-		bool rcsCrosshair = true;
+		bool snaplines = false;
+		bool box2d = false;
+		bool status2D = false;
+		bool statusText = false;
+		bool box3D = false;
+		bool velEsp = false;
+		bool headlineESP = false;
+		bool rcsCrosshair = false;
 	}settings;
+
+	struct Colors {
+		D3DCOLOR health = D3DCOLOR_ARGB(255, 46, 139, 87);
+		D3DCOLOR armor = D3DCOLOR_ARGB(255, 30, 144, 255);
+		D3DCOLOR crosshair = argb::white;
+		struct team {
+			D3DCOLOR esp = argb::green;
+			D3DCOLOR snapline = argb::green;
+			D3DCOLOR velocity = argb::blue;
+			D3DCOLOR headline = argb::blue;
+		}team;
+		struct Enemy {
+			D3DCOLOR esp = argb::red;
+			D3DCOLOR snapline = argb::red;
+			D3DCOLOR velocity = argb::purple;
+			D3DCOLOR headline = argb::purple;
+		}enemy;
+
+	}color;
+
+	struct Buttons {
+		DWORD showMenuBtn = VK_INSERT;
+		DWORD showTeammatesBtn = VK_F1;
+		DWORD snaplinesBtn = VK_F2;
+		DWORD box2dBtn = VK_F3;
+		DWORD status2DBtn = VK_F4;
+		DWORD statusTextBtn = VK_F5;
+		DWORD box3DBtn = VK_F6;
+		DWORD velEspBtn = VK_F7;
+		DWORD headlineESPBtn = VK_F8;
+		DWORD rcsCrosshairBtn = VK_F9;
+	}button;
 };

@@ -34,7 +34,7 @@ void DrawEspBox2D(vec2 top, vec2 bot, int thickness, D3DCOLOR color) {
 	tl.x = top.x - height / 4;
 	tr.x = top.x + height / 4;
 	tl.y = tr.y = top.y;
-	
+
 	vec2 bl, br;
 
 	bl.x = bot.x - height / 4;
@@ -98,7 +98,7 @@ void DrawEspBox3D(vec3 top, vec3 bot, float a, int width, int thickness, D3DCOLO
 		DrawLine(b3_2, b4_2, thickness, color);
 		DrawLine(b4_2, b1_2, thickness, color);
 	}
- } 
+}
 
 void DrawText(const char* text, float x, float y, D3DCOLOR color) {
 	RECT rect;
@@ -109,7 +109,7 @@ void DrawText(const char* text, float x, float y, D3DCOLOR color) {
 	SetRect(&rect, x + 1, y + 1, x + 1, y + 1);
 	hack->FontF->DrawTextA(NULL, text, -1, &rect, DT_CENTER | DT_NOCLIP, D3DCOLOR_ARGB(255, 0, 0, 0));
 
-	SetRect(&rect, x , y , x , y );
+	SetRect(&rect, x, y, x, y);
 	hack->FontF->DrawTextA(NULL, text, -1, &rect, DT_CENTER | DT_NOCLIP, color);
 }
 

@@ -85,6 +85,10 @@ public:
 		DEFINE_MEMBER_N(vec3, m_vecOrigin, offsets::m_vecOrigin);
 		//ViewOffeset
 		DEFINE_MEMBER_N(vec3, m_vecViewOffset, offsets::m_vecViewOffset);
+		//state
+		DEFINE_MEMBER_N(int, m_lifeState, offsets::m_lifeState);
+		//clientid
+		DEFINE_MEMBER_N(int, clientId, 0x64);
 
 	};
 };
@@ -131,6 +135,7 @@ public:
 	vec3 TransformVec(vec3 src, vec3 ang, float d);
 
 	Ent* GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList);
+	bool IsValidTarget(Ent* localPlayer, Ent* ent);
 
 
 	struct settings {
@@ -177,5 +182,6 @@ public:
 		DWORD velEspBtn = VK_F7;
 		DWORD headlineESPBtn = VK_F8;
 		DWORD rcsCrosshairBtn = VK_F9;
+		DWORD aimbotBtn = VK_F10;
 	}button;
 };

@@ -50,6 +50,9 @@ void Hack::CheckButtons() {
 	if (GetAsyncKeyState(button.rcsCrosshairBtn) & 1) {
 		settings.rcsCrosshair = !settings.rcsCrosshair;
 	}
+	if (GetAsyncKeyState(button.aimbotBtn) & 1) {
+		settings.aimbot = !settings.aimbot;
+	}
 }
 
 bool Hack::checkValidEnt(Ent* ent)
@@ -103,6 +106,16 @@ vec3 Hack::TransformVec(vec3 src, vec3 ang, float d) {
 	return newPos;
 }
 
+bool Hack::IsValidTarget(Ent* localPlayer, Ent* ent)
+{
+	if (ent && ent->iTeamNum != localPlayer->iTeamNum &&
+		ent->clientId != localPlayer->clientId && ent->m_lifeState == 0)
+	{
+		return true;
+	}
+	else return false;
+}
+
 Ent* Hack::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
 {
 	float oldDistance = FLT_MAX;
@@ -111,7 +124,7 @@ Ent* Hack::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
 
 	for (auto curr : entList->ents)
 	{
-		if (checkValidEnt(curr.ent))
+		if (IsValidTarget(localPlayer, curr.ent))
 		{
 			vec3 eyepos = localPlayer->m_vecOrigin + localPlayer->m_vecViewOffset;
 			vec3 angleTo = angles::CalcAngle(eyepos, curr.ent->m_vecOrigin);

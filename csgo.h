@@ -62,7 +62,7 @@ namespace offsets
 	constexpr ptrdiff_t force_update_spectator_glow = 0x399042;
 	constexpr ptrdiff_t anim_overlays = 0x2980;
 	constexpr ptrdiff_t m_flSpawnTime = 0xA360;
-	constexpr ptrdiff_t find_hud_element = 0x2F04C0A0;
+	constexpr ptrdiff_t find_hud_element = 0x2EBDC0A0;
 
 	//netvars
 

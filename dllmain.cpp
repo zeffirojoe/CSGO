@@ -39,7 +39,8 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		DrawText("Velocity ESP (F7)", menuOffX, menuOffy + (6 * 12), hack->settings.velEsp ? argb::green : argb::red);
 		DrawText("HeadLine ESP (F8)", menuOffX, menuOffy + (7 * 12), hack->settings.headlineESP ? argb::green : argb::red);
 		DrawText("Recoil Crosshair (F9)", menuOffX, menuOffy + (8 * 12), hack->settings.rcsCrosshair ? argb::green : argb::red);
-		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (9 * 12), argb::white);
+		DrawText("Aimbot RMC (F10)", menuOffX, menuOffy + (9 * 12), hack->settings.aimbot ? argb::green : argb::red);
+		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (10 * 12), argb::white);
 	}
 
 	for (int i = 1; i < 32; i++) {
@@ -55,10 +56,10 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 			headlineColor = hack->color.team.headline;
 		}
 		else {
-			espColor = hack->color.team.esp;
+			espColor = hack->color.enemy.esp;
 			snaplineColor = hack->color.enemy.snapline;
 			velocityColor = hack->color.enemy.velocity;
-			headlineColor = hack->color.team.headline;
+			headlineColor = hack->color.enemy.headline;
 		}
 
 		if (!hack->settings.showTeammates && (curEnt->iTeamNum == hack->localEnt->iTeamNum))
@@ -84,7 +85,7 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 			if (hack->settings.snaplines) {
 				DrawLine(entPos2D.x, entPos2D.y, windowWidth / 2, windowHeight, 2, snaplineColor); //snapLine
 			}
-			
+
 			if (hack->World2Screen(entHead3D, entHead2D)) {
 				//2D Boxes
 				if (hack->settings.box2d) {
@@ -155,6 +156,28 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		}
 	}
 
+	//aimbot
+	if (hack->settings.aimbot) {
+		//while (GetAsyncKeyState(VK_RBUTTON))
+		//{
+		Ent* localPlayer = hack->localEnt;
+		uintptr_t playerStatePtr = hack->engine + offsets::dwClientState;
+		vec3* viewAngles = (vec3*)(*(uintptr_t*)(playerStatePtr)+offsets::dwClientState_ViewAngles);
+		EntList* entList = (EntList*)(hack->client + offsets::dwEntityList);
+
+		Ent* target = hack->GetBestTarget(localPlayer, viewAngles, entList);
+
+		if (target)
+		{
+			vec3 body = target->m_vecOrigin;
+			body.z -= 10;
+			*viewAngles = angles::CalcAngle(localPlayer->m_vecOrigin, body);
+		}
+
+		//Sleep(5);
+	//}
+	}
+
 	// crosshair
 	if (hack->settings.rcsCrosshair) {
 		vec2 l, r, t, b;
@@ -191,29 +214,8 @@ DWORD WINAPI HackThread(HMODULE hModule) {
 
 		hack->crosshar2D.x = windowWidth / 2 - (windowWidth / 90 * pAng.y);
 		hack->crosshar2D.y = windowHeight / 2 + (windowHeight / 90 * pAng.x);
-
-		//aimbot
-		if (hack->settings.aimbot) {
-			while (GetAsyncKeyState(VK_RBUTTON))
-			{
-				Ent* localPlayer = hack->localEnt;
-				uintptr_t playerStatePtr = hack->engine + offsets::dwClientState;
-				vec3* viewAngles = (vec3*)(*(uintptr_t*)(playerStatePtr)+offsets::dwClientState_ViewAngles);
-				EntList* entList = (EntList*)(hack->client + offsets::dwEntityList);
-
-				Ent* target = hack->GetBestTarget(localPlayer, viewAngles, entList);
-
-				if (target)
-				{
-					vec3 body = target->m_vecOrigin;
-					body.z -= 10;
-					*viewAngles = angles::CalcAngle(localPlayer->m_vecOrigin, body);
-				}
-
-				Sleep(5);
-			}
-		}
 	}
+
 
 	// unhook
 	Patch((BYTE*)d3d9Device[42], EndSceneBytes, 7);

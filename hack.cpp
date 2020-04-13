@@ -1,5 +1,10 @@
 #include "includes.h"
 
+Hack::~Hack() {
+	this->FontF->Release();
+	this->LineL->Release();
+}
+
 void Hack::Init()
 {
 	client = (uintptr_t)GetModuleHandle("client_panorama.dll");
@@ -26,7 +31,7 @@ bool Hack::checkValidEnt(Ent* ent)
 	return true;
 }
 
-bool Hack::W2S(Vec3 pos, vec2& screen)
+bool Hack::World2Screen(Vec3 pos, vec2& screen)
 {
 	vec4 clipCoords;
 	clipCoords.x = pos.x * viewMatrix[0] + pos.y * viewMatrix[1] + pos.z * viewMatrix[2] + viewMatrix[3];
@@ -54,4 +59,12 @@ vec3 Hack::GetBonePos(Ent* ent, int bone) {
 	bonePos.y = *(float*)(bonePtr + 0x30 * bone + 0x1C);
 	bonePos.z = *(float*)(bonePtr + 0x30 * bone + 0x2C);
 	return bonePos;
+}
+
+vec3 Hack::TransformVec(vec3 src, vec3 ang, float d) {
+	vec3 newPos;
+	newPos.x = src.x + (cosf(TORAD(ang.y)) * d);
+	newPos.y = src.y + (sinf(TORAD(ang.y)) * d);
+	newPos.z = src.z + (tanf(TORAD(ang.x)) * d);
+	return newPos;
 }

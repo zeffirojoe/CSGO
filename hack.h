@@ -7,6 +7,10 @@
 
 #define ABS(x) ((x < 0) ? (-x) : (x))
 
+#define TORAD(x) ((x) * 0.01745329252)
+
+#define W2S(x,y) hack->World2Screen(x, y)
+
 class Vector3
 {
 public:
@@ -58,6 +62,14 @@ public:
 		DEFINE_MEMBER_N(int, ArmorValue, offsets::m_ArmorValue);
 		//aimpunchAngle
 		DEFINE_MEMBER_N(vec3, aimPunchAngle, offsets::m_aimPunchAngle);
+		//angEyeAnglesX
+		DEFINE_MEMBER_N(float, angEyeAnglesX, offsets::m_angEyeAnglesX);
+		//angEyeAnglesY
+		DEFINE_MEMBER_N(float, angEyeAnglesY, offsets::m_angEyeAnglesY);
+		//vecVelocity
+		DEFINE_MEMBER_N(vec3, vecVelocity, offsets::m_vecVelocity);
+		//bHasHelmet
+		DEFINE_MEMBER_N(bool, bHasHelmet, offsets::m_bHasHelmet);
 
 	};
 };
@@ -86,13 +98,30 @@ public:
 	float viewMatrix[16];
 
 	ID3DXLine* LineL;
+	ID3DXFont* FontF;
 
 	vec2 crosshar2D;
 	int crosshairSize = 4;
 
+	~Hack();
+
 	void Init();
 	void Update();
 	bool checkValidEnt(Ent* ent);
-	bool W2S(Vec3 pos, vec2& screen);
+	bool World2Screen(Vec3 pos, vec2& screen);
 	vec3 GetBonePos(Ent* ent, int bone);
+	vec3 TransformVec(vec3 src, vec3 ang, float d);
+
+
+	struct settings {
+		bool showTeammates = true;
+		bool snaplines = true;
+		bool box2d = true;
+		bool status2D = true;
+		bool statusText = true;
+		bool box3D = true;
+		bool velEsp = true;
+		bool headlineESP = true;
+		bool rcsCrosshair = true;
+	}settings;
 };

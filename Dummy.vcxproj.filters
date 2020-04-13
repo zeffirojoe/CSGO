@@ -30,6 +30,9 @@
     <ClCompile Include="hack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="calcangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="csgo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="calcangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

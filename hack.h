@@ -81,6 +81,10 @@ public:
 		DEFINE_MEMBER_N(vec3, vecVelocity, offsets::m_vecVelocity);
 		//bHasHelmet
 		DEFINE_MEMBER_N(bool, bHasHelmet, offsets::m_bHasHelmet);
+		//Origin
+		DEFINE_MEMBER_N(vec3, m_vecOrigin, offsets::m_vecOrigin);
+		//ViewOffeset
+		DEFINE_MEMBER_N(vec3, m_vecViewOffset, offsets::m_vecViewOffset);
 
 	};
 };
@@ -126,6 +130,8 @@ public:
 	vec3 GetBonePos(Ent* ent, int bone);
 	vec3 TransformVec(vec3 src, vec3 ang, float d);
 
+	Ent* GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList);
+
 
 	struct settings {
 		bool showMenu = false;
@@ -138,6 +144,7 @@ public:
 		bool velEsp = false;
 		bool headlineESP = false;
 		bool rcsCrosshair = false;
+		bool aimbot = false;
 	}settings;
 
 	struct Colors {

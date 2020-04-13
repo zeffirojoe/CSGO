@@ -191,6 +191,28 @@ DWORD WINAPI HackThread(HMODULE hModule) {
 
 		hack->crosshar2D.x = windowWidth / 2 - (windowWidth / 90 * pAng.y);
 		hack->crosshar2D.y = windowHeight / 2 + (windowHeight / 90 * pAng.x);
+
+		//aimbot
+		if (hack->settings.aimbot) {
+			while (GetAsyncKeyState(VK_RBUTTON))
+			{
+				Ent* localPlayer = hack->localEnt;
+				uintptr_t playerStatePtr = hack->engine + offsets::dwClientState;
+				vec3* viewAngles = (vec3*)(*(uintptr_t*)(playerStatePtr)+offsets::dwClientState_ViewAngles);
+				EntList* entList = (EntList*)(hack->client + offsets::dwEntityList);
+
+				Ent* target = hack->GetBestTarget(localPlayer, viewAngles, entList);
+
+				if (target)
+				{
+					vec3 body = target->m_vecOrigin;
+					body.z -= 10;
+					*viewAngles = angles::CalcAngle(localPlayer->m_vecOrigin, body);
+				}
+
+				Sleep(5);
+			}
+		}
 	}
 
 	// unhook

@@ -102,3 +102,27 @@ vec3 Hack::TransformVec(vec3 src, vec3 ang, float d) {
 	newPos.z = src.z + (tanf(TORAD(ang.x)) * d);
 	return newPos;
 }
+
+Ent* Hack::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
+{
+	float oldDistance = FLT_MAX;
+	float newDistance = 0;
+	Ent* target = nullptr;
+
+	for (auto curr : entList->ents)
+	{
+		if (checkValidEnt(curr.ent))
+		{
+			vec3 eyepos = localPlayer->m_vecOrigin + localPlayer->m_vecViewOffset;
+			vec3 angleTo = angles::CalcAngle(eyepos, curr.ent->m_vecOrigin);
+			newDistance = viewAngles->Distance(angleTo);
+
+			if (newDistance < oldDistance)
+			{
+				oldDistance = newDistance;
+				target = curr.ent;
+			}
+		}
+	}
+	return target;
+}

@@ -12,4 +12,5 @@
 #include "hook.h"
 #include "drawing.h"
 #include "hack.h"
+#include "calcangle.h"
 #include "csgo.h"

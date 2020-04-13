@@ -170,7 +170,7 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		if (target)
 		{
 			vec3 body = target->m_vecOrigin;
-			body.z -= 10;
+			//body.z -= 10;
 			*viewAngles = angles::CalcAngle(localPlayer->m_vecOrigin, body);
 		}
 

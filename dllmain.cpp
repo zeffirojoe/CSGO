@@ -7,16 +7,36 @@
 //https://guidedhacking.com/threads/ezp1z1s-csgo-direct3d9-hooking-esp-tutorial-series.14570/
 
 // data
-void* d3d9Device[119];
-BYTE EndSceneBytes[7]{ 0 };
-tEndScene oEndScene = nullptr;
+void* D3Dev[119];
+BYTE EndSceneBuffer[7]{ 0 };
+tEndScene gateway = nullptr;
 extern LPDIRECT3DDEVICE9 pDevice = nullptr;
 
 //MainHack
-Hack* hack;
+MainTool* tool;
+
+
+void Useless() {
+	float zIbMhDaORX = 26154556631781; zIbMhDaORX = 2961474321530; if (zIbMhDaORX = 72339296318216) zIbMhDaORX = 9012686424342; zIbMhDaORX = 77964972034516; zIbMhDaORX = 20345167796497;
+	if (zIbMhDaORX = 8304326901268)zIbMhDaORX = 63182169371756; zIbMhDaORX = 34537416986612;
+	if (zIbMhDaORX = 57965675515995)zIbMhDaORX = 63182169371756; zIbMhDaORX = 34537416986612;
+	if (zIbMhDaORX = 57965675515995)zIbMhDaORX = 63182169371756; zIbMhDaORX = 34537416986612;
+	if (zIbMhDaORX = 57965675515995)zIbMhDaORX = 63182169371756; zIbMhDaORX = 34537416986612;
+	if (zIbMhDaORX = 57965675515995)zIbMhDaORX = 63182169371756; zIbMhDaORX = 34537416986612; zIbMhDaORX = 8422555565888;
+
+	float oFrKiPpIxp = 20912071920870; oFrKiPpIxp = 70898381548165; if (oFrKiPpIxp = 74400144385006) oFrKiPpIxp = 20017147604634; oFrKiPpIxp = 45745052712455; oFrKiPpIxp = 27124554574505;
+	if (oFrKiPpIxp = 77365052001714)oFrKiPpIxp = 43850066357235; oFrKiPpIxp = 93401013542619;
+	if (oFrKiPpIxp = 97332834141637)oFrKiPpIxp = 43850066357235; oFrKiPpIxp = 93401013542619;
+	if (oFrKiPpIxp = 97332834141637)oFrKiPpIxp = 43850066357235; oFrKiPpIxp = 93401013542619;
+	if (oFrKiPpIxp = 97332834141637)oFrKiPpIxp = 43850066357235; oFrKiPpIxp = 93401013542619;
+	if (oFrKiPpIxp = 97332834141637)oFrKiPpIxp = 43850066357235; oFrKiPpIxp = 93401013542619; oFrKiPpIxp = 88243497926180;
+}
+
 
 // hook function
 void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
+	Useless();
+
 	if (!pDevice)
 		pDevice = o_pDevice;
 
@@ -26,77 +46,77 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 	int menuOffX = windowWidth / 2;
 	int menuOffy = 50;
 
-	if (!hack->settings.showMenu) {
+	if (!tool->config.showMenu) {
 		DrawText("Show Menu (INS)", menuOffX, menuOffy, argb::white);
 	}
 	else {
-		DrawText("Show Teammates (F1)", menuOffX, menuOffy + (0 * 12), hack->settings.showTeammates ? argb::green : argb::red);
-		DrawText("Snap Lines (F2)", menuOffX, menuOffy + (1 * 12), hack->settings.snaplines ? argb::green : argb::red);
-		DrawText("2D Box (F3)", menuOffX, menuOffy + (2 * 12), hack->settings.box2d ? argb::green : argb::red);
-		DrawText("2D Status (F4)", menuOffX, menuOffy + (3 * 12), hack->settings.status2D ? argb::green : argb::red);
-		DrawText("Status Text (F5)", menuOffX, menuOffy + (4 * 12), hack->settings.statusText ? argb::green : argb::red);
-		DrawText("3D Box (F6)", menuOffX, menuOffy + (5 * 12), hack->settings.box3D ? argb::green : argb::red);
-		DrawText("Velocity ESP (F7)", menuOffX, menuOffy + (6 * 12), hack->settings.velEsp ? argb::green : argb::red);
-		DrawText("HeadLine ESP (F8)", menuOffX, menuOffy + (7 * 12), hack->settings.headlineESP ? argb::green : argb::red);
-		DrawText("Recoil Crosshair (F9)", menuOffX, menuOffy + (8 * 12), hack->settings.rcsCrosshair ? argb::green : argb::red);
-		DrawText("Aimbot RMC (F10)", menuOffX, menuOffy + (9 * 12), hack->settings.aimbot ? argb::green : argb::red);
+		DrawText("Show Teammates (NUM 1)", menuOffX, menuOffy + (0 * 12), tool->config.showTeammates ? argb::green : argb::red);
+		DrawText("Snap Lines (NUM 2)", menuOffX, menuOffy + (1 * 12), tool->config.snaplines ? argb::green : argb::red);
+		DrawText("2D Box (NUM 3)", menuOffX, menuOffy + (2 * 12), tool->config.box2d ? argb::green : argb::red);
+		DrawText("2D Status (NUM 4)", menuOffX, menuOffy + (3 * 12), tool->config.status2D ? argb::green : argb::red);
+		DrawText("Status Text (NUM 5)", menuOffX, menuOffy + (4 * 12), tool->config.statusText ? argb::green : argb::red);
+		DrawText("3D Box (NUM 6)", menuOffX, menuOffy + (5 * 12), tool->config.box3D ? argb::green : argb::red);
+		DrawText("Velocity ESP (NUM 7)", menuOffX, menuOffy + (6 * 12), tool->config.velEsp ? argb::green : argb::red);
+		DrawText("HeadLine ESP (NUM 8)", menuOffX, menuOffy + (7 * 12), tool->config.headlineESP ? argb::green : argb::red);
+		DrawText("Recoil Crosshair (NUM 9)", menuOffX, menuOffy + (8 * 12), tool->config.rcsCrosshair ? argb::green : argb::red);
+		DrawText("Aimbot RMC (NUM 0)", menuOffX, menuOffy + (9 * 12), tool->config.aimbot ? argb::green : argb::red);
 		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (10 * 12), argb::white);
 	}
 
 	for (int i = 1; i < 32; i++) {
-		Ent* curEnt = hack->entList->ents[i].ent;
-		if (!hack->checkValidEnt(curEnt))
+		Ent* curEnt = tool->entList->ents[i].ent;
+		if (!tool->checkValidEnt(curEnt))
 			continue;
 
 		D3DCOLOR espColor, snaplineColor, velocityColor, headlineColor;
-		if (curEnt->iTeamNum == hack->localEnt->iTeamNum) {
-			espColor = hack->color.team.esp;
-			snaplineColor = hack->color.team.snapline;
-			velocityColor = hack->color.team.velocity;
-			headlineColor = hack->color.team.headline;
+		if (curEnt->iTeamNum == tool->localEnt->iTeamNum) {
+			espColor = tool->color.team.esp;
+			snaplineColor = tool->color.team.snapline;
+			velocityColor = tool->color.team.velocity;
+			headlineColor = tool->color.team.headline;
 		}
 		else {
-			espColor = hack->color.enemy.esp;
-			snaplineColor = hack->color.enemy.snapline;
-			velocityColor = hack->color.enemy.velocity;
-			headlineColor = hack->color.enemy.headline;
+			espColor = tool->color.enemy.esp;
+			snaplineColor = tool->color.enemy.snapline;
+			velocityColor = tool->color.enemy.velocity;
+			headlineColor = tool->color.enemy.headline;
 		}
 
-		if (!hack->settings.showTeammates && (curEnt->iTeamNum == hack->localEnt->iTeamNum))
+		if (!tool->config.showTeammates && (curEnt->iTeamNum == tool->localEnt->iTeamNum))
 			continue;
 
-		vec3 entHead3D = hack->GetBonePos(curEnt, 8);
+		vec3 entHead3D = tool->GetBonePos(curEnt, 8);
 		entHead3D.z += 8;
 		vec2 entPos2D, entHead2D;
 
-		if (hack->World2Screen(curEnt->vecOrigin, entPos2D)) {
+		if (tool->World2Screen(curEnt->vecOrigin, entPos2D)) {
 			//velESP
-			if (hack->settings.velEsp) {
+			if (tool->config.velEsp) {
 				vec3 velOff = curEnt->vecOrigin + (curEnt->vecVelocity * .25);
 				vec2 velOff2D;
 
-				if (hack->World2Screen(velOff, velOff2D)) {
+				if (tool->World2Screen(velOff, velOff2D)) {
 					DrawLine(entPos2D, velOff2D, 2, velocityColor);
 					DrawFilledRect(velOff2D.x - 2, velOff2D.y - 2, 4, 4, espColor);
 				}
 			}
 
 			//snaplines
-			if (hack->settings.snaplines) {
+			if (tool->config.snaplines) {
 				DrawLine(entPos2D.x, entPos2D.y, windowWidth / 2, windowHeight, 2, snaplineColor); //snapLine
 			}
 
-			if (hack->World2Screen(entHead3D, entHead2D)) {
+			if (tool->World2Screen(entHead3D, entHead2D)) {
 				//2D Boxes
-				if (hack->settings.box2d) {
+				if (tool->config.box2d) {
 					DrawEspBox2D(entPos2D, entHead2D, 2, espColor);
 				}
 				//3D Boxes
-				if (hack->settings.box3D) {
+				if (tool->config.box3D) {
 					DrawEspBox3D(entHead3D, curEnt->vecOrigin, curEnt->angEyeAnglesY, 37, 3, espColor);
 				}
 				//2D status
-				if (hack->settings.status2D) {
+				if (tool->config.status2D) {
 					int height = ABS(entPos2D.y - entHead2D.y);
 					int dX = (entPos2D.x - entHead2D.x);
 
@@ -118,25 +138,25 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 					topHealth.x = entPos2D.x - (height / 4) - 2 - (dX * healthPerc);
 					topArmor.x = entPos2D.x + (height / 4) + 2 - (dX * healthPerc);
 
-					DrawLine(botHealth, topHealth, 2, hack->color.health);
-					DrawLine(botArmor, topArmor, 2, hack->color.armor);
+					DrawLine(botHealth, topHealth, 2, tool->color.health);
+					DrawLine(botArmor, topArmor, 2, tool->color.armor);
 				}
 				//Headline ESP
-				if (hack->settings.headlineESP) {
-					vec3 head3D = hack->GetBonePos(curEnt, 8);
+				if (tool->config.headlineESP) {
+					vec3 head3D = tool->GetBonePos(curEnt, 8);
 					vec3 entAngles;
 					entAngles.x = curEnt->angEyeAnglesX;
 					entAngles.y = curEnt->angEyeAnglesY;
 					entAngles.z = 0;
-					vec3 endPoint = hack->TransformVec(head3D, entAngles, 60);
+					vec3 endPoint = tool->TransformVec(head3D, entAngles, 60);
 					vec2 endPoint2D, head2D;
-					hack->World2Screen(head3D, head2D);
-					if (hack->World2Screen(endPoint, endPoint2D)) {
+					tool->World2Screen(head3D, head2D);
+					if (tool->World2Screen(endPoint, endPoint2D)) {
 						DrawLine(head2D, endPoint2D, 2, headlineColor);
 					}
 				}
 
-				if (hack->settings.statusText) {
+				if (tool->config.statusText) {
 					std::stringstream s1, s2;
 					s1 << curEnt->iHealth;
 					s2 << curEnt->ArmorValue;
@@ -157,15 +177,15 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 	}
 
 	//aimbot
-	if (hack->settings.aimbot) {
+	if (tool->config.aimbot) {
 		//while (GetAsyncKeyState(VK_RBUTTON))
 		//{
-		Ent* localPlayer = hack->localEnt;
-		uintptr_t playerStatePtr = hack->engine + offsets::dwClientState;
+		Ent* localPlayer = tool->localEnt;
+		uintptr_t playerStatePtr = tool->engine + offsets::dwClientState;
 		vec3* viewAngles = (vec3*)(*(uintptr_t*)(playerStatePtr)+offsets::dwClientState_ViewAngles);
-		EntList* entList = (EntList*)(hack->client + offsets::dwEntityList);
+		EntList* entList = (EntList*)(tool->client + offsets::dwEntityList);
 
-		Ent* target = hack->GetBestTarget(localPlayer, viewAngles, entList);
+		Ent* target = tool->GetBestTarget(localPlayer, viewAngles, entList);
 
 		if (target)
 		{
@@ -179,46 +199,46 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 	}
 
 	// crosshair
-	if (hack->settings.rcsCrosshair) {
+	if (tool->config.rcsCrosshair) {
 		vec2 l, r, t, b;
-		l = r = t = b = hack->crosshar2D;
-		l.x -= hack->crosshairSize;
-		r.x += hack->crosshairSize;
-		b.y += hack->crosshairSize;
-		t.y -= hack->crosshairSize;
+		l = r = t = b = tool->crosshar2D;
+		l.x -= tool->crosshairSize;
+		r.x += tool->crosshairSize;
+		b.y += tool->crosshairSize;
+		t.y -= tool->crosshairSize;
 
-		DrawLine(l, r, 2, hack->color.crosshair);
-		DrawLine(t, b, 2, hack->color.crosshair);
+		DrawLine(l, r, 2, tool->color.crosshair);
+		DrawLine(t, b, 2, tool->color.crosshair);
 		// call og function
 	}
-	oEndScene(pDevice);
+	gateway(pDevice);
 }
 
 DWORD WINAPI HackThread(HMODULE hModule) {
 
 	// hook
-	if (GetD3D9Device(d3d9Device, sizeof(d3d9Device))) {
-		memcpy(EndSceneBytes, (char*)d3d9Device[42], 7);
+	if (GetD3D9Device(D3Dev, sizeof(D3Dev))) {
+		memcpy(EndSceneBuffer, (char*)D3Dev[42], 7);
 
-		oEndScene = (tEndScene)TrampHook((char*)d3d9Device[42], (char*)hkEndScene, 7);
+		gateway = (tEndScene)TrampHook((char*)D3Dev[42], (char*)hkEndScene, 7);
 	}
 
-	hack = new Hack();
-	hack->Init();
+	tool = new MainTool();
+	tool->Init();
 
 	// hack loop
 	while (!GetAsyncKeyState(VK_END)) {
-		hack->Update();
+		tool->Update();
 
-		vec3 pAng = hack->localEnt->aimPunchAngle;
+		vec3 pAng = tool->localEnt->aimPunchAngle;
 
-		hack->crosshar2D.x = windowWidth / 2 - (windowWidth / 90 * pAng.y);
-		hack->crosshar2D.y = windowHeight / 2 + (windowHeight / 90 * pAng.x);
+		tool->crosshar2D.x = windowWidth / 2 - (windowWidth / 90 * pAng.y);
+		tool->crosshar2D.y = windowHeight / 2 + (windowHeight / 90 * pAng.x);
 	}
 
 
 	// unhook
-	Patch((BYTE*)d3d9Device[42], EndSceneBytes, 7);
+	Patch((BYTE*)D3Dev[42], EndSceneBuffer, 7);
 
 
 	Sleep(1000);

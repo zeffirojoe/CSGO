@@ -1,7 +1,7 @@
 #include "includes.h"
 //https://guidedhacking.com/threads/ezp1z1s-csgo-direct3d9-hooking-esp-tutorial-series.14570/
 
-extern Hack* hack;
+extern MainTool* tool;
 
 // filled rectangle
 void DrawFilledRect(int x, int y, int w, int h, D3DCOLOR color) {
@@ -13,15 +13,15 @@ void DrawLine(int x1, int y1, int x2, int y2, int thickness, D3DCOLOR color) {
 	ID3DXLine* LineL;
 	D3DXCreateLine(pDevice, &LineL);
 
-	if (!hack->LineL)
-		D3DXCreateLine(pDevice, &hack->LineL);
+	if (!tool->LineL)
+		D3DXCreateLine(pDevice, &tool->LineL);
 
 	D3DXVECTOR2 Line[2];
 	Line[0] = D3DXVECTOR2(x1, y1);
 	Line[1] = D3DXVECTOR2(x2, y2);
 
-	hack->LineL->SetWidth(thickness);
-	hack->LineL->Draw(Line, 2, color);
+	tool->LineL->SetWidth(thickness);
+	tool->LineL->Draw(Line, 2, color);
 }
 
 void DrawLine(vec2 src, vec2 dst, int thickness, D3DCOLOR color) {
@@ -103,13 +103,22 @@ void DrawEspBox3D(vec3 top, vec3 bot, float a, int width, int thickness, D3DCOLO
 void DrawText(const char* text, float x, float y, D3DCOLOR color) {
 	RECT rect;
 
-	if (!hack->FontF)
-		D3DXCreateFont(pDevice, 14, 0, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &hack->FontF);
+	if (!tool->FontF)
+		D3DXCreateFont(pDevice, 14, 0, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &tool->FontF);
 
 	SetRect(&rect, x + 1, y + 1, x + 1, y + 1);
-	hack->FontF->DrawTextA(NULL, text, -1, &rect, DT_CENTER | DT_NOCLIP, D3DCOLOR_ARGB(255, 0, 0, 0));
+	tool->FontF->DrawTextA(NULL, text, -1, &rect, DT_CENTER | DT_NOCLIP, D3DCOLOR_ARGB(255, 0, 0, 0));
 
 	SetRect(&rect, x, y, x, y);
-	hack->FontF->DrawTextA(NULL, text, -1, &rect, DT_CENTER | DT_NOCLIP, color);
+	tool->FontF->DrawTextA(NULL, text, -1, &rect, DT_CENTER | DT_NOCLIP, color);
+}
+
+void AlsoUseless() {
+	float zSkOfUlYEz = 95418461744045; zSkOfUlYEz = 2274233199310; if (zSkOfUlYEz = 28087541776112) zSkOfUlYEz = 60550931521548; zSkOfUlYEz = 68442988863279; zSkOfUlYEz = 88632796844298;
+	if (zSkOfUlYEz = 43084956055093)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138; zSkOfUlYEz = 61106176757072;
 }
 

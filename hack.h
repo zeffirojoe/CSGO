@@ -12,7 +12,7 @@
 
 #define TORAD(x) ((x) * 0.01745329252)
 
-#define W2S(x,y) hack->World2Screen(x, y)
+#define W2S(x,y) tool->World2Screen(x, y)
 
 namespace argb {
 	const D3DCOLOR white = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -104,7 +104,7 @@ public:
 	EntListObj ents[32];
 };
 
-class Hack
+class MainTool
 {
 public:
 	uintptr_t dwEntityList = offsets::dwEntityList;
@@ -122,7 +122,7 @@ public:
 	vec2 crosshar2D;
 	int crosshairSize = 4;
 
-	~Hack();
+	~MainTool();
 
 	void Init();
 	void Update();
@@ -137,6 +137,8 @@ public:
 	Ent* GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList);
 	bool IsValidTarget(Ent* localPlayer, Ent* ent);
 
+	void VeryUseless();
+
 
 	struct settings {
 		bool showMenu = false;
@@ -150,7 +152,7 @@ public:
 		bool headlineESP = false;
 		bool rcsCrosshair = false;
 		bool aimbot = false;
-	}settings;
+	}config;
 
 	struct Colors {
 		D3DCOLOR health = D3DCOLOR_ARGB(255, 46, 139, 87);
@@ -173,15 +175,15 @@ public:
 
 	struct Buttons {
 		DWORD showMenuBtn = VK_INSERT;
-		DWORD showTeammatesBtn = VK_F1;
-		DWORD snaplinesBtn = VK_F2;
-		DWORD box2dBtn = VK_F3;
-		DWORD status2DBtn = VK_F4;
-		DWORD statusTextBtn = VK_F5;
-		DWORD box3DBtn = VK_F6;
-		DWORD velEspBtn = VK_F7;
-		DWORD headlineESPBtn = VK_F8;
-		DWORD rcsCrosshairBtn = VK_F9;
-		DWORD aimbotBtn = VK_F10;
+		DWORD showTeammatesBtn = VK_NUMPAD1;
+		DWORD snaplinesBtn = VK_NUMPAD2;
+		DWORD box2dBtn = VK_NUMPAD3;
+		DWORD status2DBtn = VK_NUMPAD4;
+		DWORD statusTextBtn = VK_NUMPAD5;
+		DWORD box3DBtn = VK_NUMPAD6;
+		DWORD velEspBtn = VK_NUMPAD7;
+		DWORD headlineESPBtn = VK_NUMPAD8;
+		DWORD rcsCrosshairBtn = VK_NUMPAD9;
+		DWORD aimbotBtn = VK_NUMPAD0;
 	}button;
 };

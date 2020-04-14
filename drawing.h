@@ -12,3 +12,5 @@ void DrawEspBox2D(vec2 top, vec2 bot, int thickness, D3DCOLOR color);
 void DrawEspBox3D(vec3 top, vec3 bot, float a, int width, int thickness, D3DCOLOR color);
 
 void DrawText(const char* text, float x, float y, D3DCOLOR color);
+
+void AlsoUseless();

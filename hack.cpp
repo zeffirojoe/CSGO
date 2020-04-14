@@ -1,11 +1,11 @@
 #include "includes.h"
 
-Hack::~Hack() {
+MainTool::~MainTool() {
 	this->FontF->Release();
 	this->LineL->Release();
 }
 
-void Hack::Init()
+void MainTool::Init()
 {
 	client = (uintptr_t)GetModuleHandle("client_panorama.dll");
 	engine = (uintptr_t)GetModuleHandle("engine.dll");
@@ -13,49 +13,49 @@ void Hack::Init()
 	localEnt = entList->ents[0].ent;
 }
 
-void Hack::Update()
+void MainTool::Update()
 {
 	memcpy(&viewMatrix, (PBYTE*)(client + dwViewMatrix), sizeof(viewMatrix));
 	this->CheckButtons();
 }
 
-void Hack::CheckButtons() {
+void MainTool::CheckButtons() {
 	if (GetAsyncKeyState(button.showMenuBtn) & 1) {
-		settings.showMenu = !settings.showMenu;
+		config.showMenu = !config.showMenu;
 	}
 	if (GetAsyncKeyState(button.showTeammatesBtn) & 1) {
-		settings.showTeammates = !settings.showTeammates;
+		config.showTeammates = !config.showTeammates;
 	}
 	if (GetAsyncKeyState(button.snaplinesBtn) & 1) {
-		settings.snaplines = !settings.snaplines;
+		config.snaplines = !config.snaplines;
 	}
 	if (GetAsyncKeyState(button.box2dBtn) & 1) {
-		settings.box2d = !settings.box2d;
+		config.box2d = !config.box2d;
 	}
 	if (GetAsyncKeyState(button.status2DBtn) & 1) {
-		settings.status2D = !settings.status2D;
+		config.status2D = !config.status2D;
 	}
 	if (GetAsyncKeyState(button.statusTextBtn) & 1) {
-		settings.statusText = !settings.statusText;
+		config.statusText = !config.statusText;
 	}
 	if (GetAsyncKeyState(button.box3DBtn) & 1) {
-		settings.box3D = !settings.box3D;
+		config.box3D = !config.box3D;
 	}
 	if (GetAsyncKeyState(button.velEspBtn) & 1) {
-		settings.velEsp = !settings.velEsp;
+		config.velEsp = !config.velEsp;
 	}
 	if (GetAsyncKeyState(button.headlineESPBtn) & 1) {
-		settings.headlineESP = !settings.headlineESP;
+		config.headlineESP = !config.headlineESP;
 	}
 	if (GetAsyncKeyState(button.rcsCrosshairBtn) & 1) {
-		settings.rcsCrosshair = !settings.rcsCrosshair;
+		config.rcsCrosshair = !config.rcsCrosshair;
 	}
 	if (GetAsyncKeyState(button.aimbotBtn) & 1) {
-		settings.aimbot = !settings.aimbot;
+		config.aimbot = !config.aimbot;
 	}
 }
 
-bool Hack::checkValidEnt(Ent* ent)
+bool MainTool::checkValidEnt(Ent* ent)
 {
 	if (ent == nullptr)
 		return false;
@@ -68,7 +68,7 @@ bool Hack::checkValidEnt(Ent* ent)
 	return true;
 }
 
-bool Hack::World2Screen(Vec3 pos, vec2& screen)
+bool MainTool::World2Screen(Vec3 pos, vec2& screen)
 {
 	vec4 clipCoords;
 	clipCoords.x = pos.x * viewMatrix[0] + pos.y * viewMatrix[1] + pos.z * viewMatrix[2] + viewMatrix[3];
@@ -89,7 +89,7 @@ bool Hack::World2Screen(Vec3 pos, vec2& screen)
 	return true;
 }
 
-vec3 Hack::GetBonePos(Ent* ent, int bone) {
+vec3 MainTool::GetBonePos(Ent* ent, int bone) {
 	uintptr_t bonePtr = ent->boneMatrix;
 	vec3 bonePos;
 	bonePos.x = *(float*)(bonePtr + 0x30 * bone + 0x0C);
@@ -98,7 +98,7 @@ vec3 Hack::GetBonePos(Ent* ent, int bone) {
 	return bonePos;
 }
 
-vec3 Hack::TransformVec(vec3 src, vec3 ang, float d) {
+vec3 MainTool::TransformVec(vec3 src, vec3 ang, float d) {
 	vec3 newPos;
 	newPos.x = src.x + (cosf(TORAD(ang.y)) * d);
 	newPos.y = src.y + (sinf(TORAD(ang.y)) * d);
@@ -106,7 +106,7 @@ vec3 Hack::TransformVec(vec3 src, vec3 ang, float d) {
 	return newPos;
 }
 
-bool Hack::IsValidTarget(Ent* localPlayer, Ent* ent)
+bool MainTool::IsValidTarget(Ent* localPlayer, Ent* ent)
 {
 	if (ent && ent->iTeamNum != localPlayer->iTeamNum &&
 		ent->clientId != localPlayer->clientId && ent->m_lifeState == 0)
@@ -116,8 +116,10 @@ bool Hack::IsValidTarget(Ent* localPlayer, Ent* ent)
 	else return false;
 }
 
-Ent* Hack::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
+Ent* MainTool::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
 {
+	VeryUseless();
+
 	float oldDistance = FLT_MAX;
 	float newDistance = 0;
 	Ent* target = nullptr;
@@ -138,4 +140,13 @@ Ent* Hack::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
 		}
 	}
 	return target;
+}
+
+void MainTool::VeryUseless() {
+	float zSkOfUlYEz = 95418461744045; zSkOfUlYEz = 2274233199310; if (zSkOfUlYEz = 28087541776112) zSkOfUlYEz = 60550931521548; zSkOfUlYEz = 68442988863279; zSkOfUlYEz = 88632796844298;
+	if (zSkOfUlYEz = 43084956055093)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
+	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138; zSkOfUlYEz = 61106176757072;
 }

@@ -112,14 +112,15 @@ vec3 MainTool::TransformVec(vec3 src, vec3 ang, float d) {
 bool MainTool::IsValidTarget(Ent* localPlayer, Ent* ent)
 {
 	if (ent && ent->iTeamNum != localPlayer->iTeamNum &&
-		ent->clientId != localPlayer->clientId && ent->m_lifeState == 0)
+		ent->clientId != localPlayer->clientId && ent->m_lifeState == 0
+		&& !ent->isDormant && ent->clientId > 0 && ent->clientId < 64)
 	{
 		return true;
 	}
 	else return false;
 }
 
-Ent* MainTool::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList)
+Ent* MainTool::GetBestTarget(Ent* localPlayer, EntList* entList)
 {
 	VeryUseless();
 
@@ -127,19 +128,16 @@ Ent* MainTool::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entLis
 	float newDistance = 0;
 	Ent* target = nullptr;
 
-	for (auto curr : entList->ents)
+	for (auto ent : entList->ents)
 	{
-		if (IsValidTarget(localPlayer, curr.ent))
+		if (IsValidTarget(localEnt, ent.ent))
 		{
-			vec3 eyepos = localPlayer->m_vecOrigin + localPlayer->m_vecViewOffset;
-			vec3 angleTo = angles::CalcAngle(eyepos, curr.ent->m_vecOrigin);
-			angleTo = angles::Norm(angleTo);
-			newDistance = viewAngles->Distance(angleTo);
-
+			vec3 angleTo = angles::CalcAngle(localPlayer->m_vecOrigin, ent.ent->vecOrigin);
+			newDistance = angles::Distance(localPlayer->aimPunchAngle, angleTo);
 			if (newDistance < oldDistance)
 			{
 				oldDistance = newDistance;
-				target = curr.ent;
+				target = ent.ent;
 			}
 		}
 	}

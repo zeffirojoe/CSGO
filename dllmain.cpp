@@ -179,24 +179,27 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 
 	//aimbot
 	if (tool->config.aimbot) {
-		//while (GetAsyncKeyState(VK_RBUTTON))
-		//{
+		Ent* currTarget = tool->target;
+
 		Ent* localPlayer = tool->localEnt;
 		uintptr_t playerStatePtr = tool->engine + offsets::dwClientState;
 		vec3* viewAngles = (vec3*)(*(uintptr_t*)(playerStatePtr)+offsets::dwClientState_ViewAngles);
 		EntList* entList = (EntList*)(tool->client + offsets::dwEntityList);
 
-		Ent* target = tool->GetBestTarget(localPlayer, viewAngles, entList);
+		if (!currTarget) {
+			currTarget = tool->GetBestTarget(localPlayer, entList);
+		}
 
-		if (target)
+		if (!tool->IsValidTarget(localPlayer, currTarget)) {
+			currTarget = tool->GetBestTarget(localPlayer, entList);
+		}
+
+		if (currTarget)
 		{
-			vec3 body = target->m_vecOrigin;
+			vec3 body = currTarget->m_vecOrigin;
 			//body.z -= 10;
 			*viewAngles = angles::Norm(angles::CalcAngle(localPlayer->m_vecOrigin, body));
 		}
-
-		//Sleep(5);
-	//}
 	}
 
 	if (tool->config.rcs) {

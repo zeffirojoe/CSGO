@@ -24,10 +24,10 @@ vec3 angles::CalcAngle(vec3 src, vec3 dst)
 {
 	vec3 angles;
 
-	vec3 delta = src - dst;
+	vec3 delta = dst - src;
 	float hyp = src.Distance(dst);
-	angles.x = -asin(delta.z / hyp) * 180.0f / PI;
-	angles.y = atan2(delta.y, delta.x) * 180.0f / PI;
+	angles.x = -asin(delta.z / hyp) * (180.0f / PI);
+	angles.y = atan2(delta.y, delta.x) * (180.0f / PI);
 	angles.z = 0.0f;
 
 	if (delta.x >= 0.0f)

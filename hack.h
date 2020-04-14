@@ -89,6 +89,10 @@ public:
 		DEFINE_MEMBER_N(int, m_lifeState, offsets::m_lifeState);
 		//clientid
 		DEFINE_MEMBER_N(int, clientId, 0x64);
+		//shots fird
+		DEFINE_MEMBER_N(int, m_iShotsFired, offsets::m_iShotsFired);
+		//ViewAngle
+		DEFINE_MEMBER_N(int, m_iShotsFired, offsets::m_viewPunchAngle);
 
 	};
 };
@@ -127,19 +131,24 @@ public:
 	void Init();
 	void Update();
 
+	//for Menu
 	void CheckButtons();
 
+	//ESP and 3D
 	bool checkValidEnt(Ent* ent);
 	bool World2Screen(Vec3 pos, vec2& screen);
 	vec3 GetBonePos(Ent* ent, int bone);
 	vec3 TransformVec(vec3 src, vec3 ang, float d);
 
+	//Aim and RCS
 	Ent* GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entList);
 	bool IsValidTarget(Ent* localPlayer, Ent* ent);
+	vec3 oPunch{ 0, 0, 0, };
 
+	//Junk Code
 	void VeryUseless();
 
-
+	//Config
 	struct settings {
 		bool showMenu = false;
 		bool showTeammates = true;
@@ -152,6 +161,7 @@ public:
 		bool headlineESP = false;
 		bool rcsCrosshair = false;
 		bool aimbot = false;
+		bool rcs = false;
 	}config;
 
 	struct Colors {
@@ -184,6 +194,7 @@ public:
 		DWORD velEspBtn = VK_NUMPAD7;
 		DWORD headlineESPBtn = VK_NUMPAD8;
 		DWORD rcsCrosshairBtn = VK_NUMPAD9;
-		DWORD aimbotBtn = VK_NUMPAD0;
+		DWORD aimbotBtn = VK_F1;
+		DWORD rcsBtn = VK_NUMPAD0;
 	}button;
 };

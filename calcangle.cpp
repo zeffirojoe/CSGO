@@ -53,13 +53,17 @@ vec3 angles::Clamp(vec3 angle)
 
 vec3 angles::Norm(vec3 angle)
 {
-	if (angle.x > 180)
-		angle.x -= 360.0f;
-	if (angle.x < 180)
-		angle.x += 360.0f;
-	if (angle.y > 180)
-		angle.y -= 360.0f;
-	if (angle.y < 180)
-		angle.y += 360.0f;
+	while (angle.y < -180) {
+		angle.y += 360;
+	}
+	while (angle.y > 190) {
+		angle.y -= 360;
+	}
+	while (angle.x > 89) {
+		angle.x = 89;
+	}
+	while (angle.x < -89) {
+		angle.x = -89;
+	}
 	return angle;
 }

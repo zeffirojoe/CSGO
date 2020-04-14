@@ -53,6 +53,9 @@ void MainTool::CheckButtons() {
 	if (GetAsyncKeyState(button.aimbotBtn) & 1) {
 		config.aimbot = !config.aimbot;
 	}
+	if (GetAsyncKeyState(button.rcsBtn) & 1) {
+		config.rcs = !config.rcs;
+	}
 }
 
 bool MainTool::checkValidEnt(Ent* ent)
@@ -130,6 +133,7 @@ Ent* MainTool::GetBestTarget(Ent* localPlayer, vec3* viewAngles, EntList* entLis
 		{
 			vec3 eyepos = localPlayer->m_vecOrigin + localPlayer->m_vecViewOffset;
 			vec3 angleTo = angles::CalcAngle(eyepos, curr.ent->m_vecOrigin);
+			angleTo = angles::Norm(angleTo);
 			newDistance = viewAngles->Distance(angleTo);
 
 			if (newDistance < oldDistance)

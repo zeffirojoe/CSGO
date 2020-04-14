@@ -59,8 +59,9 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		DrawText("Velocity ESP (NUM 7)", menuOffX, menuOffy + (6 * 12), tool->config.velEsp ? argb::green : argb::red);
 		DrawText("HeadLine ESP (NUM 8)", menuOffX, menuOffy + (7 * 12), tool->config.headlineESP ? argb::green : argb::red);
 		DrawText("Recoil Crosshair (NUM 9)", menuOffX, menuOffy + (8 * 12), tool->config.rcsCrosshair ? argb::green : argb::red);
-		DrawText("Aimbot RMC (NUM 0)", menuOffX, menuOffy + (9 * 12), tool->config.aimbot ? argb::green : argb::red);
-		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (10 * 12), argb::white);
+		DrawText("RCS (NUM 0)", menuOffX, menuOffy + (9 * 12), tool->config.rcs ? argb::green : argb::red);
+		DrawText("Aimbot (F1)", menuOffX, menuOffy + (10 * 12), tool->config.aimbot ? argb::green : argb::red);
+		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (11 * 12), argb::white);
 	}
 
 	for (int i = 1; i < 32; i++) {
@@ -191,11 +192,27 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		{
 			vec3 body = target->m_vecOrigin;
 			//body.z -= 10;
-			*viewAngles = angles::CalcAngle(localPlayer->m_vecOrigin, body);
+			*viewAngles = angles::Norm(angles::CalcAngle(localPlayer->m_vecOrigin, body));
 		}
 
 		//Sleep(5);
 	//}
+	}
+
+	if (tool->config.rcs) {
+		vec3 punchAngle = tool->localEnt->aimPunchAngle * 2;
+		if (tool->localEnt->m_iShotsFired > 1) {
+
+			uintptr_t playerStatePtr = tool->engine + offsets::dwClientState;
+			vec3* viewAngles = (vec3*)(*(uintptr_t*)(playerStatePtr)+offsets::dwClientState_ViewAngles);
+
+			vec3 newAngle = *viewAngles + tool->oPunch - punchAngle;
+
+			newAngle = angles::Norm(newAngle);
+
+			*viewAngles = newAngle;
+		}
+		tool->oPunch = punchAngle;
 	}
 
 	// crosshair

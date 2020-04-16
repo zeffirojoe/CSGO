@@ -182,8 +182,10 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		if (GetAsyncKeyState(VK_RBUTTON) < 0) {
 			if (!tool->IsValidTarget(tool->target)) 
 				tool->target = tool->GetBestTarget();
-			if (tool->target) 
+			if (tool->target) {
 				tool->AimAt(tool->target);
+				tool->target = nullptr;
+			}
 		}
 	}
 

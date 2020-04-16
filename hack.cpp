@@ -135,7 +135,7 @@ Ent* MainTool::GetBestTarget()
 		if (IsValidTarget(curr.ent))
 		{
 			vec3 eyepos = localEnt->m_vecOrigin + localEnt->m_vecViewOffset;
-			vec3 angleTo = angles::CalcAngle(eyepos, curr.ent->m_vecOrigin);
+			vec3 angleTo = angles::Norm(angles::CalcAngle(eyepos, GetBonePos(curr.ent, 8)));
 			newDistance = viewAngles->Distance(angleTo);
 
 			if (newDistance < oldDistance)

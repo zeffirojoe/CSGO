@@ -1,6 +1,5 @@
 #pragma once
 #pragma once
-#include "includes.h"
 #define PI 3.1415927f
 
 namespace angles

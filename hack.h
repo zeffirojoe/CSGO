@@ -141,8 +141,9 @@ public:
 	vec3 TransformVec(vec3 src, vec3 ang, float d);
 
 	//Aim and RCS
-	Ent* GetBestTarget(Ent* localPlayer, EntList* entList);
-	bool IsValidTarget(Ent* localPlayer, Ent* ent);
+	Ent* GetBestTarget();
+	bool IsValidTarget(Ent* ent);
+	void AimAt(Ent* ent);
 	vec3 oPunch{ 0, 0, 0, };
 	Ent* target;
 

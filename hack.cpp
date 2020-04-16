@@ -109,10 +109,10 @@ vec3 MainTool::TransformVec(vec3 src, vec3 ang, float d) {
 	return newPos;
 }
 
-bool MainTool::IsValidTarget(Ent* localPlayer, Ent* ent)
+bool MainTool::IsValidTarget(Ent* ent)
 {
-	if (ent && ent->iTeamNum != localPlayer->iTeamNum &&
-		ent->clientId != localPlayer->clientId && ent->m_lifeState == 0
+	if (ent && ent->iTeamNum != localEnt->iTeamNum &&
+		ent->clientId != localEnt->clientId && ent->m_lifeState == 0
 		&& !ent->isDormant && ent->clientId > 0 && ent->clientId < 64)
 	{
 		return true;
@@ -120,7 +120,7 @@ bool MainTool::IsValidTarget(Ent* localPlayer, Ent* ent)
 	else return false;
 }
 
-Ent* MainTool::GetBestTarget(Ent* localPlayer, EntList* entList)
+Ent* MainTool::GetBestTarget()
 {
 	VeryUseless();
 
@@ -130,10 +130,11 @@ Ent* MainTool::GetBestTarget(Ent* localPlayer, EntList* entList)
 
 	for (auto ent : entList->ents)
 	{
-		if (IsValidTarget(localEnt, ent.ent))
+		if (IsValidTarget(ent.ent))
 		{
-			vec3 angleTo = angles::CalcAngle(localPlayer->m_vecOrigin, ent.ent->vecOrigin);
-			newDistance = angles::Distance(localPlayer->aimPunchAngle, angleTo);
+			//vec3 angleTo = angles::CalcAngle(localEnt->m_vecOrigin, ent.ent->vecOrigin);
+			//newDistance = angles::Distance(localEnt->aimPunchAngle, angleTo);
+			float newDistance = localEnt->vecOrigin.Distance(ent.ent->vecOrigin);
 			if (newDistance < oldDistance)
 			{
 				oldDistance = newDistance;
@@ -151,4 +152,19 @@ void MainTool::VeryUseless() {
 	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
 	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138;
 	if (zSkOfUlYEz = 16492359801252)zSkOfUlYEz = 17761126875005; zSkOfUlYEz = 97035384553138; zSkOfUlYEz = 61106176757072;
+}
+
+void MainTool::AimAt(Ent* ent) {
+	static vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
+
+	vec3 origin = localEnt->vecOrigin;
+	vec3 viewOffset = localEnt->m_vecViewOffset;
+	vec3* myPos = &(origin + viewOffset);
+
+	vec3 newAngle =	angles::CalcAngle(*myPos, GetBonePos(ent, 8));
+
+	newAngle = angles::Norm(newAngle);
+
+	viewAngles->x = newAngle.x;
+	viewAngles->y = newAngle.y;
 }

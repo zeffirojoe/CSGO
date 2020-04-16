@@ -30,9 +30,6 @@ vec3 angles::CalcAngle(vec3 src, vec3 dst)
 	angles.y = atan2(delta.y, delta.x) * (180.0f / PI);
 	angles.z = 0.0f;
 
-	if (delta.x >= 0.0f)
-		angles.y += 180.0f;
-
 	return angles;
 }
 

@@ -12,7 +12,7 @@ namespace offsets
 	constexpr ptrdiff_t dwClientState_Map = 0x28C;
 	constexpr ptrdiff_t dwClientState_MapDirectory = 0x188;
 	constexpr ptrdiff_t dwClientState_MaxPlayer = 0x388;
-	constexpr ptrdiff_t dwClientState_PlayerInfo = 0x52B8;
+	constexpr ptrdiff_t dwClientState_PlayerInfo = 0x2;
 	constexpr ptrdiff_t dwClientState_State = 0x108;
 	constexpr ptrdiff_t dwClientState_ViewAngles = 0x4D88;
 	constexpr ptrdiff_t clientstate_delta_ticks = 0x174;
@@ -62,7 +62,7 @@ namespace offsets
 	constexpr ptrdiff_t force_update_spectator_glow = 0x399042;
 	constexpr ptrdiff_t anim_overlays = 0x2980;
 	constexpr ptrdiff_t m_flSpawnTime = 0xA360;
-	constexpr ptrdiff_t find_hud_element = 0x2A26C0A0;
+	constexpr ptrdiff_t find_hud_element = 0x2EB9C0A0;
 
 	//netvars
 

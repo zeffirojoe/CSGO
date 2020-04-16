@@ -181,7 +181,7 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 	if (tool->config.aimbot) {
 		if (GetAsyncKeyState(VK_RBUTTON) < 0) {
 			if (!tool->IsValidTarget(tool->target)) 
-				tool->target = tool->GetBestTarget();
+				tool->target = tool->GetBestTargetFOV();
 			if (tool->target) {
 				tool->AimAt(tool->target);
 				tool->target = nullptr;

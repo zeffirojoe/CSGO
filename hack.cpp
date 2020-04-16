@@ -120,7 +120,7 @@ bool MainTool::IsValidTarget(Ent* ent)
 	else return false;
 }
 
-Ent* MainTool::GetBestTarget()
+Ent* MainTool::GetBestTargetFOV()
 {
 	static vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
 

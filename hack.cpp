@@ -122,23 +122,26 @@ bool MainTool::IsValidTarget(Ent* ent)
 
 Ent* MainTool::GetBestTarget()
 {
+	static vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
+
 	VeryUseless();
 
 	float oldDistance = FLT_MAX;
 	float newDistance = 0;
 	Ent* target = nullptr;
 
-	for (auto ent : entList->ents)
+	for (auto curr : entList->ents)
 	{
-		if (IsValidTarget(ent.ent))
+		if (IsValidTarget(curr.ent))
 		{
-			//vec3 angleTo = angles::CalcAngle(localEnt->m_vecOrigin, ent.ent->vecOrigin);
-			//newDistance = angles::Distance(localEnt->aimPunchAngle, angleTo);
-			float newDistance = localEnt->vecOrigin.Distance(ent.ent->vecOrigin);
+			vec3 eyepos = localEnt->m_vecOrigin + localEnt->m_vecViewOffset;
+			vec3 angleTo = angles::CalcAngle(eyepos, curr.ent->m_vecOrigin);
+			newDistance = viewAngles->Distance(angleTo);
+
 			if (newDistance < oldDistance)
 			{
 				oldDistance = newDistance;
-				target = ent.ent;
+				target = curr.ent;
 			}
 		}
 	}

@@ -113,7 +113,8 @@ bool MainTool::IsValidTarget(Ent* ent)
 {
 	if (ent && ent->iTeamNum != localEnt->iTeamNum &&
 		ent->clientId != localEnt->clientId && ent->m_lifeState == 0
-		&& !ent->isDormant && ent->clientId > 0 && ent->clientId < 64)
+		&& !ent->isDormant && ent->clientId > 0 && ent->clientId < 64 
+		&& ent->iHealth > 0)
 	{
 		return true;
 	}
@@ -168,6 +169,8 @@ void MainTool::AimAt(Ent* ent) {
 
 	newAngle = angles::Norm(newAngle);
 
-	viewAngles->x = newAngle.x;
-	viewAngles->y = newAngle.y;
+	vec3 diffs = newAngle - *viewAngles;
+
+	viewAngles->x += diffs.x / smoothing;
+	viewAngles->y += diffs.y / smoothing;
 }

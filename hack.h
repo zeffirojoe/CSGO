@@ -146,6 +146,7 @@ public:
 	void AimAt(Ent* ent);
 	vec3 oPunch{ 0, 0, 0, };
 	Ent* target;
+	float smoothing = 10.0f;
 
 	//Junk Code
 	void VeryUseless();

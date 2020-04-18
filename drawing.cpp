@@ -3,6 +3,28 @@
 
 extern MainTool* tool;
 
+void DrawCircle(int X, int Y, int radius, int numSides, D3DCOLOR Color)
+{
+	D3DXVECTOR2 Line[128];
+	float Step = PI * 2.0 / numSides;
+	int Count = 0;
+	for (float a = 0; a < PI * 2.0; a += Step)
+	{
+		float X1 = radius * cos(a) + X;
+		float Y1 = radius * sin(a) + Y;
+		float X2 = radius * cos(a + Step) + X;
+		float Y2 = radius * sin(a + Step) + Y;
+		Line[Count].x = X1;
+		Line[Count].y = Y1;
+		Line[Count + 1].x = X2;
+		Line[Count + 1].y = Y2;
+		Count += 2;
+	}
+	tool->LineL->Begin();
+	tool->LineL->Draw(Line, Count, Color);
+	tool->LineL->End();
+}
+
 // filled rectangle
 void DrawFilledRect(int x, int y, int w, int h, D3DCOLOR color) {
 	D3DRECT rect = { x,y,x + w,y + h };

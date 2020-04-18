@@ -123,7 +123,7 @@ bool MainTool::IsValidTarget(Ent* ent)
 
 Ent* MainTool::GetBestTargetFOV()
 {
-	static vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
+	vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
 
 	VeryUseless();
 
@@ -159,7 +159,7 @@ void MainTool::VeryUseless() {
 }
 
 void MainTool::AimAt(Ent* ent) {
-	static vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
+	vec3* viewAngles = (vec3*)(*(uintptr_t*)(engine + offsets::dwClientState) + offsets::dwClientState_ViewAngles);
 
 	vec3 origin = localEnt->vecOrigin;
 	vec3 viewOffset = localEnt->m_vecViewOffset;

@@ -142,11 +142,13 @@ public:
 
 	//Aim and RCS
 	Ent* GetBestTargetFOV();
+	Ent* GetBestTargetDIS();
 	bool IsValidTarget(Ent* ent);
 	void AimAt(Ent* ent);
 	vec3 oPunch{ 0, 0, 0, };
 	Ent* target;
 	float smoothing = 10.0f;
+	float FOV = 40.0f;
 
 	//Junk Code
 	void VeryUseless();
@@ -163,7 +165,8 @@ public:
 		bool velEsp = false;
 		bool headlineESP = false;
 		bool rcsCrosshair = false;
-		bool aimbot = false;
+		bool aimbotFOV = false;
+		bool aimbotDIS = false;
 		bool rcs = false;
 	}config;
 
@@ -197,7 +200,8 @@ public:
 		DWORD velEspBtn = VK_NUMPAD7;
 		DWORD headlineESPBtn = VK_NUMPAD8;
 		DWORD rcsCrosshairBtn = VK_NUMPAD9;
-		DWORD aimbotBtn = VK_F1;
+		DWORD aimbotFOVBtn = VK_F1;
+		DWORD aimbotDISBtn = VK_F2;
 		DWORD rcsBtn = VK_NUMPAD0;
 	}button;
 };

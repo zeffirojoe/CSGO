@@ -5,6 +5,9 @@ extern MainTool* tool;
 
 void DrawCircle(int X, int Y, int radius, int numSides, D3DCOLOR Color)
 {
+	if (!tool->LineL)
+		D3DXCreateLine(pDevice, &tool->LineL);
+
 	D3DXVECTOR2 Line[128];
 	float Step = PI * 2.0 / numSides;
 	int Count = 0;

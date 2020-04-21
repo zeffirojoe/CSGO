@@ -50,8 +50,13 @@ void MainTool::CheckButtons() {
 	if (GetAsyncKeyState(button.rcsCrosshairBtn) & 1) {
 		config.rcsCrosshair = !config.rcsCrosshair;
 	}
-	if (GetAsyncKeyState(button.aimbotBtn) & 1) {
-		config.aimbot = !config.aimbot;
+	if (GetAsyncKeyState(button.aimbotFOVBtn) & 1) {
+		config.aimbotFOV = !config.aimbotFOV;
+		if (config.aimbotDIS) config.aimbotDIS = false;
+	}
+	if (GetAsyncKeyState(button.aimbotDISBtn) & 1) {
+		config.aimbotDIS = !config.aimbotDIS;
+		if (config.aimbotFOV) config.aimbotFOV = false;
 	}
 	if (GetAsyncKeyState(button.rcsBtn) & 1) {
 		config.rcs = !config.rcs;
@@ -138,6 +143,30 @@ Ent* MainTool::GetBestTargetFOV()
 			vec3 eyepos = localEnt->m_vecOrigin + localEnt->m_vecViewOffset;
 			vec3 angleTo = angles::Norm(angles::CalcAngle(eyepos, GetBonePos(curr.ent, 8)));
 			newDistance = viewAngles->Distance(angleTo);
+
+			if (newDistance < oldDistance && newDistance < ( FOV / 6 ))
+			{
+				oldDistance = newDistance;
+				target = curr.ent;
+			}
+		}
+	}
+	return target;
+}
+
+Ent* MainTool::GetBestTargetDIS()
+{
+	VeryUseless();
+
+	float oldDistance = FLT_MAX;
+	float newDistance = 0;
+	Ent* target = nullptr;
+
+	for (auto curr : entList->ents)
+	{
+		if (IsValidTarget(curr.ent))
+		{
+			float newDistance = localEnt->vecOrigin.Distance(curr.ent->vecOrigin);
 
 			if (newDistance < oldDistance)
 			{

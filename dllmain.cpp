@@ -60,8 +60,9 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		DrawText("HeadLine ESP (NUM 8)", menuOffX, menuOffy + (7 * 12), tool->config.headlineESP ? argb::green : argb::red);
 		DrawText("Recoil Crosshair (NUM 9)", menuOffX, menuOffy + (8 * 12), tool->config.rcsCrosshair ? argb::green : argb::red);
 		DrawText("RCS (NUM 0)", menuOffX, menuOffy + (9 * 12), tool->config.rcs ? argb::green : argb::red);
-		DrawText("Aimbot (F1)", menuOffX, menuOffy + (10 * 12), tool->config.aimbot ? argb::green : argb::red);
-		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (11 * 12), argb::white);
+		DrawText("Aimbot FOV (F1)", menuOffX, menuOffy + (10 * 12), tool->config.aimbotFOV ? argb::green : argb::red);
+		DrawText("Aimbot Distance (F2)", menuOffX, menuOffy + (11 * 12), tool->config.aimbotDIS ? argb::green : argb::red);
+		DrawText("Hide Menu (INS)", menuOffX, menuOffy + (12 * 12), argb::white);
 	}
 
 	for (int i = 1; i < 32; i++) {
@@ -178,10 +179,21 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 	}
 
 	//aimbot
-	if (tool->config.aimbot) {
+	if (tool->config.aimbotFOV) {
+		DrawCircle(tool->crosshar2D.x, tool->crosshar2D.y, tool->FOV, 20, argb::white);
 		if (GetAsyncKeyState(VK_RBUTTON) < 0) {
 			if (!tool->IsValidTarget(tool->target)) 
 				tool->target = tool->GetBestTargetFOV();
+			if (tool->target) {
+				tool->AimAt(tool->target);
+				tool->target = nullptr;
+			}
+		}
+	}
+	else if (tool->config.aimbotDIS) {
+		if (GetAsyncKeyState(VK_RBUTTON) < 0) {
+			if (!tool->IsValidTarget(tool->target))
+				tool->target = tool->GetBestTargetDIS();
 			if (tool->target) {
 				tool->AimAt(tool->target);
 				tool->target = nullptr;

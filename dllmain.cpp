@@ -40,9 +40,6 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 	if (!pDevice)
 		pDevice = o_pDevice;
 
-	// drawing stuff
-	DrawText("IF YOU'RE USING THIS, YOU MUST BE PRETTY WHITE", windowWidth / 2, windowHeight - 20, argb::white);
-
 	int menuOffX = windowWidth / 2;
 	int menuOffy = 50;
 

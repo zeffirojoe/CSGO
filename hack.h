@@ -91,9 +91,6 @@ public:
 		DEFINE_MEMBER_N(int, clientId, 0x64);
 		//shots fird
 		DEFINE_MEMBER_N(int, m_iShotsFired, offsets::m_iShotsFired);
-		//ViewAngle
-		DEFINE_MEMBER_N(int, m_iShotsFired, offsets::m_viewPunchAngle);
-
 	};
 };
 
